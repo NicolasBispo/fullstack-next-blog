@@ -6,27 +6,28 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema, LoginSchema } from "@/schemas/auth";
+import { registerSchema, RegisterSchema } from "@/schemas/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
-import Link from "next/link";
 
-export default function LoginPage() {
-  const form = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
+export default function SignupPage() {
+  const form = useForm<RegisterSchema>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
-  const {loginMutation} = useAuth()
+  const {registerMutation} = useAuth()
 
-  const onSubmit = async (data: LoginSchema) => {
-    await loginMutation.mutateAsync(data)
+  const onSubmit = async (data: RegisterSchema) => {
+    await registerMutation.mutateAsync(data)
   };
 
   return (
@@ -34,15 +35,26 @@ export default function LoginPage() {
       <Card className="px-3 w-[600px]">
         <Form {...form}>
           <form
-            className="flex flex-col gap-2"
+            className="flex flex-col gap-4"
             onSubmit={form.handleSubmit(onSubmit)}
           >
+            <FormField
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <Input {...field} disabled={registerMutation.isPending} />
+                  <FormMessage> {form.formState.errors.name?.message} </FormMessage>
+                </FormItem>
+              )}
+            />
             <FormField
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
-                  <Input {...field} disabled={loginMutation.isPending} />
+                  <Input {...field} disabled={registerMutation.isPending} />
+                  <FormMessage> {form.formState.errors.email?.message} </FormMessage>
                 </FormItem>
               )}
             />
@@ -51,15 +63,13 @@ export default function LoginPage() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <Input {...field} type="password" disabled={loginMutation.isPending} />
+                  <Input {...field} type="password" disabled={registerMutation.isPending} />
+                  <FormMessage> {form.formState.errors.password?.message} </FormMessage>
                 </FormItem>
               )}
             />
             <div className="flex items-center justify-end">
-              <Button disabled={loginMutation.isPending} type="submit">Login</Button>
-            </div>
-            <div className="flex items-center justify-center">
-              <p className="text-black/80">Don't have an account? <Link className="text-primary hover:underline" href="/signup">Signup</Link></p>
+              <Button disabled={registerMutation.isPending} type="submit">Signup</Button>
             </div>
           </form>
         </Form>

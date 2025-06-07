@@ -19,7 +19,7 @@ export async function encrypt(payload: SessionPayload) {
 export async function decrypt(token: string) {
   try {
     const { payload } = await jwtVerify(token, encodedKey);
-    return payload;
+    return payload as SessionPayload;
   } catch (error) {
     console.error(error);
     throw new Error("Invalid token");
@@ -62,4 +62,11 @@ export async function updateSession() {
 export async function deleteSession() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
+}
+
+export async function getSession() {
+  const session = (await cookies()).get('session')?.value
+  if(!session) return null
+  const payload = await decrypt(session)
+  return payload as SessionPayload
 }
