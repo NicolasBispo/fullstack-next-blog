@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ContextProvider from "@/contexts/context-provider";
+import { Navbar }  from "@/components/shared/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ContextProvider>{children}</ContextProvider>
+      <body className={`${inter.className} flex flex-col min-h-screen`}>
+        <ContextProvider>
+          <Navbar />
+          {children}
+        </ContextProvider>
       </body>
     </html>
   );

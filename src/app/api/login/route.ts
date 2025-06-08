@@ -1,7 +1,7 @@
 import { LoginSchema } from "@/schemas/auth";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { AuthService } from "@/services/auth-service";
+import AuthService  from "@/services/auth-service";
 import { createSession } from "@/lib/session";
 
 export async function POST(request: NextRequest) {

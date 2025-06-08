@@ -12,7 +12,7 @@ import { loginSchema, LoginSchema } from "@/schemas/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/contexts/auth-context";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -30,7 +30,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-full min-w-screen min-h-screen h-screen bg-background flex items-center justify-center">
+    <div className="w-full min-w-screen flex-grow bg-background flex items-center justify-center">
       <Card className="px-3 w-[600px]">
         <Form {...form}>
           <form

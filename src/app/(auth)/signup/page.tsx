@@ -13,7 +13,7 @@ import { registerSchema, RegisterSchema } from "@/schemas/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function SignupPage() {
   const form = useForm<RegisterSchema>({
